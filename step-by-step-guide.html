@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Updating NetSuite DS Guides — Offshore SOP</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- LineIcons -->
+  <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+
+  <style>
+    :root{
+      --ink:#0b1220;
+      --muted:#5b6473;
+      --line:#e7eaf0;
+      --soft:#f6f7fb;
+      --accent:#0ea5e9;         /* sky */
+      --accent-soft:#e0f2fe;    /* sky-100 */
+    }
+    body{
+      font-family:"Manrope", system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+      background:#fff;
+      color:var(--ink);
+      line-height:1.7;
+    }
+    .wrap{ max-width: 860px; }
+
+    /* Top minimal header */
+    .top{
+      border-bottom:1px solid var(--line);
+      background:#fff;
+    }
+    .title{
+      letter-spacing:-.02em;
+      font-weight:800;
+      margin:0;
+    }
+    .sub{
+      color:var(--muted);
+      margin:0;
+    }
+
+    /* Progress rail (left dot timeline feel but still one-column) */
+    .rail{
+      position:relative;
+      padding-left: 1.25rem;
+      margin-top: 1.25rem;
+    }
+    .rail:before{
+      content:"";
+      position:absolute;
+      left: 9px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--line), var(--line));
+    }
+
+    /* Step */
+    .step{
+      position:relative;
+      padding: 1.1rem 1.1rem 1.1rem 1.1rem;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:#fff;
+      margin-bottom: 1rem;
+    }
+    .dot{
+      position:absolute;
+      left: -1.25rem;
+      top: 1.25rem;
+      width: 18px;
+      height: 18px;
+      border-radius: 99px;
+      background: var(--accent-soft);
+      border: 2px solid var(--accent);
+      box-shadow: 0 0 0 4px #fff;
+    }
+
+    .stephead{
+      display:flex;
+      align-items:flex-start;
+      gap:.75rem;
+      margin-bottom:.5rem;
+    }
+    .badge-step{
+      display:inline-flex;
+      align-items:center;
+      gap:.4rem;
+      padding:.25rem .6rem;
+      border-radius:999px;
+      background: var(--soft);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-weight:600;
+      font-size:.85rem;
+      flex: 0 0 auto;
+    }
+    .steptitle{
+      margin:0;
+      font-weight:800;
+      letter-spacing:-.01em;
+      font-size:1.02rem;
+    }
+    .desc{ color:var(--muted); margin: .2rem 0 0 0; }
+
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:.4rem;
+      font-size:.88rem;
+      padding:.25rem .55rem;
+      border-radius:999px;
+      background:#fff;
+      border:1px solid var(--line);
+      color: var(--muted);
+    }
+
+    .link{
+      display:inline-flex;
+      align-items:center;
+      gap:.45rem;
+      color: var(--accent);
+      font-weight:700;
+      text-decoration:none;
+      margin-top:.25rem;
+    }
+    .link:hover{ text-decoration:underline; }
+
+    /* Code */
+    .code{
+      margin-top:.75rem;
+      background:#0b1220;
+      color:#e5e7eb;
+      border-radius:12px;
+      padding: .95rem 1rem;
+      border:1px solid rgba(2,6,23,.1);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-size:.92rem;
+      white-space: pre-wrap;
+    }
+
+    /* Note */
+    .note{
+      margin-top:.75rem;
+      background: var(--accent-soft);
+      border: 1px solid rgba(14,165,233,.35);
+      color:#075985;
+      border-radius: 12px;
+      padding: .85rem .95rem;
+    }
+    .note strong{ color:#0c4a6e; }
+
+    /* Images: clickable */
+    figure{
+      margin: .9rem 0 0 0;
+      border:1px solid var(--line);
+      border-radius:12px;
+      overflow:hidden;
+      background:#fff;
+    }
+    figure img{
+      width:100%;
+      display:block;
+      cursor: zoom-in;
+    }
+    figcaption{
+      padding:.6rem .85rem;
+      font-size:.88rem;
+      color: var(--muted);
+      border-top:1px solid var(--line);
+      background:#fff;
+    }
+
+    /* Part headers */
+    .part{
+      margin-top: 2.25rem;
+      padding-top: .25rem;
+    }
+    .part h2{
+      font-weight:900;
+      letter-spacing:-.02em;
+      margin-bottom:.25rem;
+    }
+    .part p{
+      color: var(--muted);
+      margin:0;
+    }
+
+    /* Footer */
+    footer{
+      margin-top: 2rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size:.9rem;
+      text-align:center;
+    }
+
+    /* Modal image */
+    .modal-content{
+      border-radius: 16px;
+      border: 1px solid var(--line);
+    }
+    .modal-img{
+      width:100%;
+      height:auto;
+      border-radius: 12px;
+      border:1px solid var(--line);
+    }
+
+    /* Small screens */
+    @media (max-width: 576px){
+      .rail{ padding-left: 1rem; }
+      .rail:before{ left: 7px; }
+      .dot{ left: -1.15rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Minimal Top -->
+  <div class="top">
+    <div class="container wrap py-4">
+      <div class="d-flex align-items-center gap-3">
+        <div class="d-flex align-items-center justify-content-center"
+             style="width:44px;height:44px;border-radius:14px;background:var(--accent-soft);border:1px solid rgba(14,165,233,.35);color:var(--accent);">
+          <i class="lni lni-bolt-alt fs-5"></i>
+        </div>
+        <div>
+          <h1 class="title">Updating NetSuite DS Guides</h1>
+          <p class="sub">Offshore SOP • One column • Mobile-first • Click images to zoom</p>
+        </div>
+      </div>
+
+      <div class="note mt-3">
+        <strong>Exemplar for this task:</strong> Create Cash Sale (guide and script)
+      </div>
+
+      <div class="mt-3">
+        <div class="d-flex flex-wrap gap-2">
+          <span class="chip"><i class="lni lni-layers"></i> Main Guide (e.g., Create Cash Sale [DS])</span>
+          <span class="chip"><i class="lni lni-popup"></i> Guide Tips Guide (e.g., Create Cash Sale - Guide Tips)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="container wrap py-4 py-md-5">
+    <!-- Part 1 -->
+    <div class="part">
+      <h2><i class="lni lni-search"></i> Part 1: Check the Guide Script and the Guide</h2>
+      <p>Guide Scripts are the single source of truth. Always compare the script vs actual guide behavior.</p>
+    </div>
+
+    <div class="rail">
+      <!-- Step 1 -->
+      <div class="step">
+        <div class="dot"></div>
+        <div class="stephead">
+          <span class="badge-step"><i class="lni lni-clipboard"></i> Step 1</span>
+          <div>
+            <p class="steptitle">Open the script of the guide assigned to you</p>
+            <p class="desc">Open the NSGL Global script file from SharePoint.</p>
+          </div>
+        </div>
+
+        <a class="link" target="_blank" rel="noopener"
+           href="https://oracle.sharepoint.com/:x:/r/teams/LCSGlobalContent/_layouts/15/Doc.aspx?sourcedoc[%E2%80%A6]0-%20NSGL%20Global.xlsx&action=default&mobileredirect=true">
+          <i class="lni lni-link"></i> Open Script Link
+        </a>
+
+        <figure>
+          <img src="image1.png" alt="image1"
+               data-bs-toggle="modal" data-bs-target="#imgModal"
+               data-img="image1.png" data-title="Step 1 — Open the assigned script link">
+          <figcaption>image1.png — Click to expand</figcaption>
+        </figure>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="step">
+        <div class="dot"></div>
+        <div class="stephead">
+          <span class="badge-step"><i class="lni lni-grid-alt"></i> Step 2</span>
+          <div>
+            <p class="steptitle">Look for the tab of the script assigned to you</p>
+            <p class="desc">Find the worksheet/tab for your specific guide.</p>
+          </div>
+        </div>
+
+        <figure>
+          <img src="image2.png" alt="image2"
+               data-bs-toggle="modal" data-bs-target="#imgModal"
+               data-img="image2.png" data-title="Step 2 — Find the correct tab">
+          <figcaption>image2.png — Click to expand</figcaption>
+        </figure>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="step">
+        <div class="dot"></div>
+        <div class="stephead">
+          <span class="badge-step"><i class="lni lni-play"></i> Step 3</span>
+          <div>
+            <p class="steptitle">Open NetSuite and run the guide</p>
+            <p class="desc">Check where Guide Tips appear and compare it with the script.</p>
+          </div>
+        </div>
+
+        <div class="note">
+          <strong>Goal:</strong> Identify mismatches BEFORE you update the script and guides.
+        </div>
+      </div>
+    </div>
+
+    <!-- Part 2 -->
+    <div class="part">
+      <h2><i class="lni lni-pencil-alt"></i> Part 2: Updating the Script</h2>
+      <p>Update the script first so the guide work is aligned and verifiable.</p>
+    </div>
+
+    <div class="rail">
+      <!-- Step 4 -->
+      <div class="step">
+        <div class="dot"></div>
+        <div class="stephead">
+          <span class="badge-step"><i class="lni lni-files"></i> Step 4</span>
+          <div>
+            <p class="steptitle">Update script using Create Cash Sale as the exemplar</p>
+            <p class="desc">Add GT apiName (if missing), fix tip positions, and renumber tips.</p>
+          </div>
+        </div>
+
+        <a class="link" target="_blank" rel="noopener"
+           href="https://oracle.sharepoint.com/:x:/r/teams/LCSGlobalContent/_layouts/15/Doc.aspx?sourcedoc=%7BEBA9BD6C-4747-4C06-9678-F85ADD9BF08D%7D&file=26.1%20Deep%20Segmentation%20-%20Invoice%20and%20Payments%20-%20Guide%20Creation.xlsx&action=default&mobileredirect=true">
+          <i class="lni lni-link"></i> Open Exemplar Script
+        </a>
+
+        <div class="note mt-2">
+          <strong>Add the following:</strong>
+          <ul class="mb-0 mt-1">
+            <li><strong>GT apiName</strong> (if not yet available)</li>
+            <li>Correct position of the Guide Tips</li>
+            <li>Number them accordingly</li>
+          </ul>
+        </div>
+
+        <figure>
+          <img src="image3.png" alt="image3"
+               data-bs-toggle="modal" data-bs-target="#imgModal"
+               data-img="image3.png" data-title="Step 4 — Script update example">
+          <figcaption>image3.png — Click to expand</figcaption>
+        </figure>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="step">
+        <div class="dot"></div>
+        <div class="stephead">
+          <span class="badge-step"><i class="lni lni-user"></i> Step 5</span>
+          <div>
+            <p class="steptitle">Login to OGL and look for the guide you will update</p>
+            <p class="desc">Confirm the guide name and DS version before cloning.</p>
+          </div>
+        </div>
+
+        <figure>
+          <img src="image4.png" alt="image4"
+               data-bs-toggle="modal" data-bs-target="#imgModal"
+               data-img="image4.png" data-title="Step 5 — Find guide in OGL">
+          <figcaption>image4.png — Click to expand</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <!-- Part 3 -->
+    <div class="part">
+      <h2><i class="lni lni-cogs"></i> Part 3: Create the Guide Tips Guide + Update the Main Guide</h2>
+      <p>Follow the steps in order. Replace <code>dux4kfwo</code> with the Main Guide apiName.</p>
+    </div>
+
+    <div class="rail">
+      <!-- Step 6 -->
+      <div class="step">
+        <div class="dot"></div>
+        <div class="stephead">
+          <span class="badge-step"><i class="lni lni-copy"></i> Step 6</span>
+          <div>
+            <p class="steptitle">Duplicate the guide</p>
+            <p class="desc">Clone the guide so you can create a separate Guide Tips guide.</p>
+          </div>
+        </div>
+
+        <figure>
+          <img src="image5.png" alt="image5"
+               data-bs-toggle="modal" data-bs-target="#imgModal"
+               data-img="image5.png" data-title="Step 6 — Duplicate the guide">
+          <figcaption>image5.png — Click to expand</figcaption>
+        </figure>
+      </div>
+
+      <!-- Step 7 -->
+      <div class="step">
+        <div class="dot"></div>
+        <div class="stephead">
+          <span class="badge-step"><i class="lni lni-tag"></i> Step 7</span>
+          <div>
+            <p class="steptitle">Rename the cloned guide</p>
+            <p class="desc">Rename to: <strong>Name of the Guide - Guide Tips[DS]</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 8 -->
+      <div class="step">
+        <div class="dot"></div>
+        <div class="stephead">
+          <span class="badge-step"><i class="lni lni-code-alt"></i> Step 8</span>
+          <div>
+            <p class="steptitle">Copy the apiName and add it to the script</p>
+            <p class="desc">Paste it in the script under the <strong>GT apiName</strong> section.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 9 -->
+      <div class="step">
+        <div class="dot"></div>
+        <div class="stephead">
+          <span class="badge-step"><i class="lni lni-target"></i> Step 9</span>
+          <div>
+            <p class="steptitle">Prepare to update both guides</p>
+            <p class="desc">You will update the Guide Tips guide and the Main Guide.</p>
+          </div>
+        </div>
+        <div class="note">
+          <ul class="mb-0">
+            <li><strong>Name of the Guide - Guide Tips[DS]</strong></li>
+            <li><strong>Name of the Guide [DS]</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Step 10 -->
+      <div class="step">
+        <div class="dot"></div>
+        <div class="stephead">
+          <span class="badge-step"><i class="lni lni-popup"></i> Step 10</span>
+          <div>
+            <p class="steptitle">Open the Guide Tips guide</p>
+            <p class="desc">Go to: <strong>Name of the Guide - Guide Tips[DS]</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 11 -->
+      <div class="step">
+        <div class="dot"></div>
+        <div class="stephead">
+          <span class="badge-step"><i class="lni lni-control-panel"></i> Step 11</span>
+          <div>
+            <p class="steptitle">Add a new Step 1 and add the following in Source</p>
+            <p class="desc">This is the controller step.</p>
+          </div>
+        </div>
+
+        <div class="code">&lt;p&gt;[Controller]&lt;/p&gt;
+&lt;style type="text/css"&gt;div[class*="ns-cond-dux4kfwo"]{
+visibility: hidden;
+}
+&lt;/style&gt;</div>
+
+        <div class="note">
+          <strong>Take note:</strong> <code>dux4kfwo</code> is the apiName of the Main Guide.
+        </div>
+      </div>
+
+      <!-- Step 12 -->
+      <div class="step">
+        <div class="dot"></div>
+        <div class="stephead">
+          <span class="badge-step"><i class="lni lni-brush"></i> Step 12</span>
+          <div>
+            <p class="steptitle">Add this custom CSS class</p>
+            <p class="desc"><strong>ns-popover-inner-hide</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 13 -->
+      <div class="step">
+        <div class="dot"></div>
+        <div class="stephead">
+          <span class="badge-step"><i class="lni lni-pointer"></i> Step 13</span>
+          <div>
+            <p class="steptitle">Set the target to body</p>
+            <p class="desc">Target selector: <strong>body</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 14 -->
+      <div class="step">
+        <div class="dot"></div>
+        <div class="stephead">
+          <span class="badge-step"><i class="lni lni-cut"></i> Step 14</span>
+          <div>
+            <p class="steptitle">In all guide tips: remove step condition and add CSS class</p>
+            <p class="desc">Apply to every Guide Tip in the Guide Tips guide.</p>
+          </div>
+        </div>
+        <div class="note">
+          Remove step condition and add:
+          <strong>ns-cond-dux4kfwo</strong> (Main Guide apiName)
+        </div>
+      </div>
+
+      <!-- Step 15 -->
+      <div class="step">
+        <div class="dot"></div>
+        <div class="stephead">
+          <span class="badge-step"><i class="lni lni-rocket"></i> Step 15</span>
+          <div>
+            <p class="steptitle">Save and Exit → go to Activation</p>
+            <p class="desc">Set autoload to the page where Guide Tips should appear.</p>
+          </div>
+        </div>
+
+        <div class="code">Display this Guide in Autoload
+When the page has URL Matching /app/accounting/transactions/cashsale.nl</div>
+
+        <div class="note">
+          <strong>The URL is where the Guide Tips should appear.</strong>
+        </div>
+      </div>
+
+      <!-- Step 16 -->
+      <div class="step">
+        <div class="dot"></div>
+        <div class="stephead">
+          <span class="badge-step"><i class="lni lni-settings"></i> Step 16</span>
+          <div>
+            <p class="steptitle">Guide Settings (Guide Tips guide)</p>
+            <p class="desc">Uncheck <strong>Sticky Guide</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 17 -->
+      <div class="step">
+        <div class="dot"></div>
+        <div class="stephead">
+          <span class="badge-step"><i class="lni lni-layout"></i> Step 17</span>
+          <div>
+            <p class="steptitle">Main Guide: Step 4 header — add the following in Source</p>
+            <p class="desc">Go to <strong>Name of the Guide [DS]</strong> and edit Step 4 header.</p>
+          </div>
+        </div>
+
+        <div class="code">&lt;style type="text/css"&gt;div.ns-cond-dux4kfwo {
+visibility: visible !important;
+}
+&lt;/style&gt;</div>
+      </div>
+
+      <!-- Step 18 -->
+      <div class="step">
+        <div class="dot"></div>
+        <div class="stephead">
+          <span class="badge-step"><i class="lni lni-trash-can"></i> Step 18</span>
+          <div>
+            <p class="steptitle">In Step 4, remove the ns-cond custom class</p>
+            <p class="desc">Remove the <strong>ns-cond</strong> class from Step 4.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 19 -->
+      <div class="step">
+        <div class="dot"></div>
+        <div class="stephead">
+          <span class="badge-step"><i class="lni lni-move"></i> Step 19</span>
+          <div>
+            <p class="steptitle">Add ns-tip-zindex-999 custom class</p>
+            <p class="desc">Add <strong>ns-tip-zindex-999</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 20 -->
+      <div class="step">
+        <div class="dot"></div>
+        <div class="stephead">
+          <span class="badge-step"><i class="lni lni-save"></i> Step 20</span>
+          <div>
+            <p class="steptitle">Save and Exit</p>
+            <p class="desc">Save the updated Main Guide.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 21 -->
+      <div class="step">
+        <div class="dot"></div>
+        <div class="stephead">
+          <span class="badge-step"><i class="lni lni-checkmark"></i> Step 21</span>
+          <div>
+            <p class="steptitle">Test your guide and confirm the script is updated</p>
+            <p class="desc">Run the guide in NetSuite and verify Guide Tips + script alignment.</p>
+          </div>
+        </div>
+
+        <div class="note">
+          <strong>Done criteria:</strong>
+          <ul class="mb-0 mt-1">
+            <li>Guide Tips appear on the correct URL</li>
+            <li>Script positions + numbering match actual behavior</li>
+            <li>GT apiName is recorded</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      Internal SOP — Offshore Team • Last updated: <span id="date"></span>
+    </footer>
+  </main>
+
+  <!-- Image Modal -->
+  <div class="modal fade" id="imgModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header" style="border-bottom:1px solid var(--line);">
+          <div class="fw-bold" id="imgTitle">Image</div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img id="imgSrc" class="modal-img" src="" alt="Expanded screenshot" />
+          <div class="small mt-3" style="color:var(--muted);">
+            Tip: Right-click → Open image in new tab for full resolution.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Date
+    document.getElementById("date").textContent =
+      new Date().toLocaleDateString(undefined, { year:"numeric", month:"long", day:"numeric" });
+
+    // Modal image wiring
+    const imgModal = document.getElementById('imgModal');
+    imgModal.addEventListener('show.bs.modal', function (event) {
+      const trigger = event.relatedTarget;
+      const img = trigger.getAttribute('data-img');
+      const title = trigger.getAttribute('data-title') || 'Image';
+      document.getElementById('imgTitle').textContent = title;
+      document.getElementById('imgSrc').src = img;
+    });
+    imgModal.addEventListener('hidden.bs.modal', function () {
+      document.getElementById('imgSrc').src = '';
+    });
+  </script>
+</body>
+</html>
